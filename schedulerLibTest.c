@@ -14,27 +14,43 @@ int areEqual(Queue a, Queue b)
 	return 0 == memcmp(a.elements,b.elements,a.elementSize*a.noOfElements);
 }
 
+
+int cmpfunc (const void * a, const void * b)
+{
+   return ( *(int*)a - *(int*)b );
+}
+
 void test_create_creates_queue_of_intType(){
 	Queue *queuePtr;
 	int result;
 	process *pr;
-	process job1 = {1,10,1000};
-	
-	queuePtr = create(sizeof(process),4);
+	process job1 = {1,10,50};
+	process job2 = {2,5,30};
+	process job3 = {3,7,10};
+
+	queuePtr = create(sizeof(process),3);
+	enqueue(queuePtr,&job2);
+		pr = (process*)queuePtr->elements;
+		printf("jobid===>%d,==>priority %d==>time %d\n",pr->jobId,pr->priority,pr->time);	
+	enqueue(queuePtr,&job3);
+		pr = (process*)(queuePtr->elements+sizeof(process));
+		printf("jobid===>%d,==>priority %d==>time %d\n",pr->jobId,pr->priority,pr->time);	
 	result = enqueue(queuePtr,&job1);
+		pr = (process*)(queuePtr->elements+(2*sizeof(process)));
+		printf("jobid===>%d,==>priority %d==>time %d\n",pr->jobId,pr->priority,pr->time);	
+	
+	qsort(queuePtr->elements,3,sizeof(process),cmpfunc);
+						
+						printf("After sort \n\n");	
+
+// sorted based on priority
 	pr = (process*)queuePtr->elements;
-	// printf("%d\n",(process*)queuePtr->elements);
-	printf("\n\n%d",pr->jobId);	
+	printf("jobid===>%d,==>priority %d==>time %d\n",pr->jobId,pr->priority,pr->time);	
+
+	pr = (process*)(queuePtr->elements+sizeof(process));
+	printf("jobid===>%d,==>priority %d==>time %d\n",pr->jobId,pr->priority,pr->time);	
+
+	pr = (process*)(queuePtr->elements+(2*sizeof(process)));
+	printf("jobid===>%d,==>priority %d==>time %d\n",pr->jobId,pr->priority,pr->time);	
+
 }
-// void test_Enqueue_FloatElement_into_queue_through_rearEnd(){
-// 	// float inputElement = 9.223f;
-// 	// float input2 = 7.989f;
-// 	// Queue *queuePtr;
-// 	// int result;
-// 	// float floatArray[4] = {9.223f,7.989f,0.0,0.0};
-// 	// Queue expectedQueue = {floatArray,sizeof(float),0,1,4};
-// 	// queuePtr = create(sizeof(float),4);
-// 	// enqueue(queuePtr,&inputElement);
-// 	result = enqueue(queuePtr,&input2);
-// 	ASSERT(areEqual(expectedQueue,*queuePtr));
-// }

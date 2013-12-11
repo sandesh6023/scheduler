@@ -10,8 +10,8 @@ typedef char String[256];
 
 typedef struct 
 {
-	int jobId;
 	int priority;
+	int jobId;
 	int time;
 }process;
 

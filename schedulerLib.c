@@ -1,8 +1,9 @@
 #include "schedulerLib.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
-//-----------------------------------------------
+
 Queue* create(int typeSize, int noOfElements)
 {
 	Queue *queue = malloc(sizeof(Queue));
@@ -15,6 +16,7 @@ Queue* create(int typeSize, int noOfElements)
 }
 
 int enqueue(Queue *queue, void *inputElement){
+	
 	if(queue->rear == queue->noOfElements-1) return 0;
 	queue->rear = queue->rear + 1;
 	memcpy(queue->elements+(queue->rear*queue->elementSize),inputElement,queue->elementSize);
